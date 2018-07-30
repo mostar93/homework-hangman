@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/hangman.css"/>
+ 
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Hangman</h1>
+        </div>
+    </header>
+    <div class="container" id="wrapper">
+        <div class="row">
+            <div class="col-md-3"> </div>
+            <div class="col-md-3" id="game"> </div>
+            <div class="col-md-3" id="game"> 
+                    <p class="right">
+                        Press any key to get started!
+                    </p><br>
+                    <div class="right">
+                        Wins: <span id="wincounter"></span>
+                    </div><br><br><br>
+                    <div class="right">Current Word</div><br>
+                    <div id="progress"></div><br><br>
+                    <div class="right">Number of guessess remaining</div>
+                    <span id="guesses-left"></span><br>
+                    <div class="right">Letters Already Guessed</div>
+                    <div id="letters-used"></div><br><br><br>
+                    <button id="random-button" class="btn btn-primary btn-xs"><h6 style="margin: 0;"><span class="fa fa-question">reset</span></h6></button>
+                    
+
+
+            </div>
+                
+            <div class="col-md-3"> </div>
+            
+        </div>
+    </div>
+    
+
+
+
+
+<script type="text/javascript">
+
+var answers = ["kobe", "lebron", "steph", "durant"];
+var winsEL = document.getElementById("wincounter");
+var guessesLeft = document.getElementById("guesses-left");
+var lettersUsedEl = document.getElementById("letters-used");
+var progress = document.getElementById("progress");
+var button = document.getElementById("random-button");
+
+
+wins = 0;
+magicword = "";
+guessesLeft = 10;
+lettersUsed = [];
+
+
+
+
+
+
+pickmagicword = function (answers) {
+        randomword = [Math.floor(Math.random() * answers.length)];
+        magicword = answers[randomword];
+       return magicword;
+        
+        
+}
+
+pickmagicword (answers);
+
+
+setupgame = function (magicword) {
+        var underscore = '';
+        for (var i =0; i < magicword.length; i++) {
+            underscore += '_';
+        }
+
+        newUnderscore = underscore.split("");
+        progress.textContent = newUnderscore;
+        
+}
+
+setupgame(magicword);
+
+arrmagicword = magicword.split("");
+
+document.onkeyup = function (event) {
+   var userGuess = event.key;
+   for (var i = 0; i < arrmagicword.length; i++) {
+        if (userGuess === arrmagicword[i]) {
+            newUnderscore[i] = userGuess;
+            progress.textContent = newUnderscore;
+            var rightanswer = arrmagicword.join("");
+            var myanswer = newUnderscore.join("");
+            if (rightanswer === myanswer) {
+            alert("You win!");
+            wins += 1;
+            winsEL.textContent = wins;
+            } 
+        else if (!(userGuess === arrmagicword[i])) {
+            lettersUsed.push(userGuess);
+            lettersUsedEl.textContent = lettersUsed
+            
+        }                  
+        }
+    }
+}
+
+ button.onclick = function(){
+     pickmagicword(answers);
+     setupgame(magicword);
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+        
+    
+
+</script>
+</body>
+</html>
